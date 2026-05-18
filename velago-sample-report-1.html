@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VelaGo — Sample Report · Q1 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1a2e;
+  --ink2: #2d2d4a;
+  --muted: #6b7280;
+  --light: #9ca3af;
+  --rule: #e5e7eb;
+  --bg: #fafaf8;
+  --surface: #ffffff;
+  --accent: #1e3a5f;
+  --accent2: #2563eb;
+  --green: #059669;
+  --red: #dc2626;
+  --amber: #d97706;
+  --gold: #92742a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* PAGE */
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  background: var(--surface);
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  padding: 64px 72px 48px;
+  border-bottom: 2px solid var(--ink);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 32px;
+}
+
+.firm-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.report-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 300;
+  color: var(--ink);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.report-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.header-meta {
+  text-align: right;
+}
+
+.header-meta .period {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.header-meta .prepared {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+/* ADVISOR BLOCK */
+.advisor-block {
+  padding: 24px 72px;
+  background: var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.advisor-info {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+
+.advisor-info strong {
+  color: #fff;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.advisor-contact {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  text-align: right;
+}
+
+/* CONTENT */
+.content {
+  padding: 56px 72px;
+}
+
+/* SECTION */
+.section {
+  margin-bottom: 56px;
+}
+
+.section-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* SUMMARY CARD */
+.summary-card {
+  background: var(--accent);
+  padding: 40px 48px;
+  border-radius: 4px;
+  margin-bottom: 32px;
+  color: #fff;
+}
+
+.summary-greeting {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 20px;
+}
+
+.summary-body {
+  font-size: 13px;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.85);
+}
+
+.summary-body p { margin-bottom: 16px; }
+.summary-body p:last-child { margin-bottom: 0; }
+
+.summary-body strong { color: #fff; }
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.kpi-item {
+  background: var(--surface);
+  padding: 28px 24px;
+}
+
+.kpi-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.kpi-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.kpi-value.positive { color: var(--green); }
+.kpi-value.negative { color: var(--red); }
+
+.kpi-change {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.kpi-change.up { color: var(--green); }
+.kpi-change.down { color: var(--red); }
+
+/* TABLE */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.data-table th {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 10px 0;
+  border-bottom: 2px solid var(--ink);
+  font-weight: 500;
+}
+
+.data-table th:not(:first-child) { text-align: right; }
+
+.data-table td {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 12px;
+  color: var(--ink);
+  vertical-align: middle;
+}
+
+.data-table td:not(:first-child) { text-align: right; }
+
+.data-table tr:last-child td { border-bottom: 2px solid var(--ink); }
+
+.data-table .asset-name {
+  font-weight: 500;
+  color: var(--ink);
+  display: block;
+}
+
+.data-table .asset-type {
+  font-size: 10px;
+  color: var(--muted);
+  display: block;
+  margin-top: 1px;
+}
+
+.val-pos { color: var(--green); }
+.val-neg { color: var(--red); }
+.val-neu { color: var(--muted); }
+
+/* ALLOCATION BAR */
+.allocation-block {
+  margin-bottom: 32px;
+}
+
+.alloc-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.alloc-label {
+  font-size: 11px;
+  color: var(--ink);
+  width: 140px;
+  flex-shrink: 0;
+}
+
+.alloc-bar-wrap {
+  flex: 1;
+  height: 8px;
+  background: var(--rule);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.alloc-bar {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+.alloc-pct {
+  font-size: 11px;
+  color: var(--muted);
+  width: 40px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.alloc-val {
+  font-size: 11px;
+  color: var(--ink);
+  width: 100px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* HIGHLIGHT BOX */
+.highlight-box {
+  border-left: 3px solid var(--accent);
+  padding: 20px 24px;
+  background: #f0f4ff;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 24px;
+}
+
+.highlight-box p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--ink2);
+  margin-bottom: 8px;
+}
+
+.highlight-box p:last-child { margin-bottom: 0; }
+
+/* ACTION ITEMS */
+.action-list {
+  list-style: none;
+  margin-bottom: 32px;
+}
+
+.action-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: flex-start;
+}
+
+.action-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--rule);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 28px;
+}
+
+.action-content {}
+
+.action-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.action-detail {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* MARKET NOTE */
+.market-section {
+  background: #fafaf8;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+.market-section p {
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--ink2);
+  margin-bottom: 16px;
+}
+
+.market-section p:last-child { margin-bottom: 0; }
+
+/* FOOTER */
+.footer {
+  padding: 40px 72px;
+  border-top: 2px solid var(--ink);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.footer-left {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--ink);
+  font-style: italic;
+}
+
+.footer-disc {
+  font-size: 10px;
+  color: var(--light);
+  line-height: 1.7;
+}
+
+.footer-disc strong {
+  color: var(--muted);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 9px;
+}
+
+.watermark {
+  text-align: center;
+  padding: 20px 72px 32px;
+  font-size: 10px;
+  color: var(--rule);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  .header { padding: 40px 32px 32px; grid-template-columns: 1fr; }
+  .advisor-block { padding: 20px 32px; flex-direction: column; gap: 12px; }
+  .content { padding: 40px 32px; }
+  .footer { padding: 32px; grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .watermark { padding: 16px 32px 24px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="firm-name">VelaGo</div>
+      <h1 class="report-title">
+        Quarterly Portfolio<br>
+        Review — <em>Q1 2026</em>
+      </h1>
+    </div>
+    <div class="header-meta">
+      <span class="period">Q1 2026</span>
+      <div class="prepared">
+        Prepared for<br>
+        <strong style="color:var(--ink);font-size:13px;">[Client]</strong><br>
+        January 1 — March 31, 2026<br>
+        Prepared: April 4, 2026
+      </div>
+    </div>
+  </div>
+
+  <div class="advisor-block">
+    <div class="advisor-info">
+      <strong>VelaGo</strong>
+      AI Communications for Financial Advisors · velago.app
+    </div>
+    <div class="advisor-contact">
+      hello@velago.app<br>
+      velago.app
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- PERSONAL NOTE -->
+    <div class="section">
+      <span class="section-label">From Your Advisor</span>
+      <h2 class="section-title">A Note on Your Quarter</h2>
+
+      <div class="summary-card">
+        <div class="summary-greeting">Dear [Client],</div>
+        <div class="summary-body">
+          <p>Q1 2026 was a quarter defined by <strong>resilience and discipline</strong>. Markets opened the year under pressure — January saw a sharp rotation out of growth equities as the Federal Reserve signalled a higher-for-longer rate environment — yet your portfolio closed the quarter ahead of its benchmark, demonstrating the value of the diversification strategy we put in place last September.</p>
+          <p>Your total portfolio value stands at <strong>$847,320</strong>, reflecting a net gain of <strong>$31,420 (+3.85%)</strong> for the quarter. This compares favourably to the S&P 500's Q1 return of 2.1% and your blended benchmark return of 2.7%.</p>
+          <p>The standout performers were your international developed market allocation and the short-duration bond ladder we implemented in November. Your technology positions — which we trimmed in December — avoided the brunt of January's correction and have since partially recovered.</p>
+          <p>Looking ahead to Q2, I have three specific recommendations I want to discuss with you. I have outlined them in the Action Items section below. No decisions need to be made immediately — these are ideas I want you to sit with before our next review.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PORTFOLIO SNAPSHOT -->
+    <div class="section">
+      <span class="section-label">Portfolio Snapshot</span>
+      <h2 class="section-title">Key Metrics — Q1 2026</h2>
+
+      <div class="kpi-grid">
+        <div class="kpi-item">
+          <span class="kpi-label">Portfolio Value</span>
+          <span class="kpi-value">$847K</span>
+          <span class="kpi-change up">▲ $31,420 this quarter</span>
+        </div>
+        <div class="kpi-item">
+          <span class="kpi-label">Q1 Return</span>
+          <span class="kpi-value positive">+3.85%</span>
+          <span class="kpi-change up">▲ vs benchmark +2.70%</span>
+        </div>
+        <div class="kpi-item">
+          <span class="kpi-label">12-Month Return</span>
+          <span class="kpi-value positive">+11.2%</span>
+          <span class="kpi-change up">▲ vs benchmark +9.4%</span>
+        </div>
+        <div class="kpi-item">
+          <span class="kpi-label">Since Inception</span>
+          <span class="kpi-value positive">+38.4%</span>
+          <span class="kpi-change">Since Jan 2022</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOLDINGS -->
+    <div class="section">
+      <span class="section-label">Portfolio Holdings</span>
+      <h2 class="section-title">Position Summary</h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Position</th>
+            <th>Value</th>
+            <th>Weight</th>
+            <th>Q1 Return</th>
+            <th>12M Return</th>
+            <th>Gain / Loss</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="asset-name">US Equity — Core</span>
+              <span class="asset-type">Vanguard Total Market ETF (VTI)</span>
+            </td>
+            <td>$254,196</td>
+            <td>30.0%</td>
+            <td class="val-pos">+2.1%</td>
+            <td class="val-pos">+12.4%</td>
+            <td class="val-pos">+$5,214</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="asset-name">International Developed</span>
+              <span class="asset-type">iShares MSCI EAFE ETF (EFA)</span>
+            </td>
+            <td>$169,464</td>
+            <td>20.0%</td>
+            <td class="val-pos">+6.8%</td>
+            <td class="val-pos">+14.2%</td>
+            <td class="val-pos">+$10,812</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="asset-name">Fixed Income — Short Duration</span>
+              <span class="asset-type">iShares 1-3 Year Treasury (SHY)</span>
+            </td>
+            <td>$152,518</td>
+            <td>18.0%</td>
+            <td class="val-pos">+1.4%</td>
+            <td class="val-pos">+4.8%</td>
+            <td class="val-pos">+$2,096</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="asset-name">Technology — Growth</span>
+              <span class="asset-type">Invesco QQQ Trust (QQQ)</span>
+            </td>
+            <td>$118,625</td>
+            <td>14.0%</td>
+            <td class="val-neg">-1.2%</td>
+            <td class="val-pos">+18.6%</td>
+            <td class="val-neg">-$1,440</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="asset-name">Real Estate Investment Trust</span>
+              <span class="asset-type">Vanguard Real Estate ETF (VNQ)</span>
+            </td>
+            <td>$84,732</td>
+            <td>10.0%</td>
+            <td class="val-pos">+4.2%</td>
+            <td class="val-neg">-2.1%</td>
+            <td class="val-pos">+$3,412</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="asset-name">Emerging Markets</span>
+              <span class="asset-type">iShares MSCI Emerging Markets (EEM)</span>
+            </td>
+            <td>$50,839</td>
+            <td>6.0%</td>
+            <td class="val-pos">+5.1%</td>
+            <td class="val-pos">+8.4%</td>
+            <td class="val-pos">+$2,460</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="asset-name">Cash & Money Market</span>
+              <span class="asset-type">Fidelity Government Money Market</span>
+            </td>
+            <td>$16,946</td>
+            <td>2.0%</td>
+            <td class="val-neu">+1.3%</td>
+            <td class="val-neu">+5.2%</td>
+            <td class="val-pos">+$218</td>
+          </tr>
+          <tr style="background:#fafaf8;">
+            <td><span class="asset-name" style="font-weight:600;">Total Portfolio</span></td>
+            <td style="font-weight:600;">$847,320</td>
+            <td style="font-weight:600;">100%</td>
+            <td class="val-pos" style="font-weight:600;">+3.85%</td>
+            <td class="val-pos" style="font-weight:600;">+11.2%</td>
+            <td class="val-pos" style="font-weight:600;">+$22,772</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ALLOCATION -->
+    <div class="section">
+      <span class="section-label">Asset Allocation</span>
+      <h2 class="section-title">How Your Portfolio Is Positioned</h2>
+
+      <div class="allocation-block">
+        <div class="alloc-row">
+          <span class="alloc-label">US Equity</span>
+          <div class="alloc-bar-wrap">
+            <div class="alloc-bar" style="width:30%;background:#1e3a5f;"></div>
+          </div>
+          <span class="alloc-pct">30%</span>
+          <span class="alloc-val">$254,196</span>
+        </div>
+        <div class="alloc-row">
+          <span class="alloc-label">Intl. Developed</span>
+          <div class="alloc-bar-wrap">
+            <div class="alloc-bar" style="width:20%;background:#2563eb;"></div>
+          </div>
+          <span class="alloc-pct">20%</span>
+          <span class="alloc-val">$169,464</span>
+        </div>
+        <div class="alloc-row">
+          <span class="alloc-label">Fixed Income</span>
+          <div class="alloc-bar-wrap">
+            <div class="alloc-bar" style="width:18%;background:#059669;"></div>
+          </div>
+          <span class="alloc-pct">18%</span>
+          <span class="alloc-val">$152,518</span>
+        </div>
+        <div class="alloc-row">
+          <span class="alloc-label">Technology</span>
+          <div class="alloc-bar-wrap">
+            <div class="alloc-bar" style="width:14%;background:#7c3aed;"></div>
+          </div>
+          <span class="alloc-pct">14%</span>
+          <span class="alloc-val">$118,625</span>
+        </div>
+        <div class="alloc-row">
+          <span class="alloc-label">Real Estate</span>
+          <div class="alloc-bar-wrap">
+            <div class="alloc-bar" style="width:10%;background:#d97706;"></div>
+          </div>
+          <span class="alloc-pct">10%</span>
+          <span class="alloc-val">$84,732</span>
+        </div>
+        <div class="alloc-row">
+          <span class="alloc-label">Emerging Markets</span>
+          <div class="alloc-bar-wrap">
+            <div class="alloc-bar" style="width:6%;background:#dc2626;"></div>
+          </div>
+          <span class="alloc-pct">6%</span>
+          <span class="alloc-val">$50,839</span>
+        </div>
+        <div class="alloc-row">
+          <span class="alloc-label">Cash</span>
+          <div class="alloc-bar-wrap">
+            <div class="alloc-bar" style="width:2%;background:#9ca3af;"></div>
+          </div>
+          <span class="alloc-pct">2%</span>
+          <span class="alloc-val">$16,946</span>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <p>Your current allocation is within the agreed risk parameters set in your Investment Policy Statement (IPS). The target allocation of 60% equity / 18% fixed income / 22% alternatives and cash remains appropriate for your 12-year investment horizon and moderate risk tolerance.</p>
+        <p>One minor drift has occurred: international developed markets have grown to 20% of portfolio (target: 18%) following strong Q1 performance. I recommend a small trim in Q2 to rebalance — see Action Items below.</p>
+      </div>
+    </div>
+
+    <!-- MARKET CONTEXT -->
+    <div class="section">
+      <span class="section-label">Market Context</span>
+      <h2 class="section-title">What Happened in Q1 — and What It Means for You</h2>
+
+      <div class="market-section">
+        <p>Q1 2026 opened with the Federal Reserve holding the federal funds rate at 4.75–5.00%, signalling that rate cuts — widely expected in late 2025 — would be delayed further. This triggered a January selloff in rate-sensitive growth equities, with the Nasdaq falling 6.2% in the first three weeks of the year before recovering through February and March.</p>
+        <p>International markets outperformed US equities for the second consecutive quarter, driven by relative currency strength in Europe and continued earnings recovery in Japan. Your 20% international allocation was the largest single contributor to Q1 outperformance versus benchmark.</p>
+        <p>The short-duration bond ladder we built in November 2025 continued to generate yield above 4.8% annualised, acting as a stabilising force during January's volatility. This was the strategy working exactly as intended.</p>
+        <p>Looking into Q2: the Fed's next meeting is May 7. Markets are pricing in one 25bps cut by year-end, with two cuts increasingly priced for 2027. This environment remains broadly supportive of your current positioning — we do not need to make reactive changes based on rate speculation.</p>
+      </div>
+    </div>
+
+    <!-- ACTION ITEMS -->
+    <div class="section">
+      <span class="section-label">Q2 Recommendations</span>
+      <h2 class="section-title">Three Items for Your Consideration</h2>
+
+      <ul class="action-list">
+        <li class="action-item">
+          <span class="action-num">01</span>
+          <div class="action-content">
+            <span class="action-title">Rebalance International Developed — Trim $16,946</span>
+            <span class="action-detail">Your international allocation has drifted to 20% (target: 18%) following strong Q1 gains. I recommend trimming approximately $16,946 from EFA and redirecting proceeds into your short-duration fixed income position. This locks in outperformance and restores your IPS target allocation. No tax implications — this is held in your Roth IRA.</span>
+          </div>
+        </li>
+        <li class="action-item">
+          <span class="action-num">02</span>
+          <div class="action-content">
+            <span class="action-title">Review Emergency Fund Position</span>
+            <span class="action-detail">At our last meeting you mentioned your emergency fund (held outside this portfolio) was approximately 3 months of expenses. With the current 5.1% yield available in high-yield savings accounts, I'd like to review whether it makes sense to increase this to 6 months. Purely a cash flow conversation — worth 15 minutes at our next call.</span>
+          </div>
+        </li>
+        <li class="action-item">
+          <span class="action-num">03</span>
+          <div class="action-content">
+            <span class="action-title">529 Contribution Timing — Emily's College Fund</span>
+            <span class="action-detail">Based on your timeline (Emily starts college in 2031), Q2 2026 is an optimal window to increase 529 contributions given the current equity market environment. I've modelled two scenarios for your review: maintaining current contributions ($500/mo) vs increasing to $800/mo. I'll share the projection spreadsheet before our next meeting.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- NEXT STEPS -->
+    <div class="section">
+      <span class="section-label">Next Steps</span>
+      <h2 class="section-title">Before We Meet Next</h2>
+
+      <div class="highlight-box">
+        <p>Our next quarterly review is scheduled for <strong>July 8, 2026</strong>. I will send a calendar invitation with a pre-meeting questionnaire 10 days before.</p>
+        <p>In the meantime, please review the three action items above and let me know if you have questions. Reach us at <strong>hello@velago.app</strong> or visit <strong>velago.app</strong>.</p>
+        <p>Thank you for the trust you place in me. It is a responsibility I take seriously every day.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      VelaGo<br>
+      <span style="font-size:15px;color:var(--muted);">Quarterly Client Report — Q1 2026</span>
+    </div>
+    <div class="footer-disc">
+      <strong>Important Disclosure</strong>
+      This report is prepared for informational purposes only and does not constitute investment advice. Past performance is not indicative of future results. All returns are net of advisory fees. Securities mentioned are held in the managed account. Please refer to your full account statements for complete position details. This report was produced by VelaGo (velago.app) on behalf of your advisor.
+    </div>
+  </div>
+
+  <div style="background:#1e3a5f;color:#fff;text-align:center;padding:20px 72px;font-size:11px;letter-spacing:2px;text-transform:uppercase;line-height:1.8;">
+    ⚠ &nbsp;SAMPLE DOCUMENT — ALL NAMES AND CONTACT DETAILS ARE HIDDEN&nbsp; ⚠<br>
+    <span style="font-size:9px;opacity:0.6;letter-spacing:1px;">Generated by VelaGo · velago.app · Confidential · Not for distribution</span>
+  </div>
+
+</div>
+</body>
+</html>
